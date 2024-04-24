@@ -26,6 +26,12 @@
     <Filter Include="Data\Shaders">
       <UniqueIdentifier>{38c32011-edaf-4083-bb77-be03e4e3d720}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Data\Images\32">
+      <UniqueIdentifier>{25c03940-5f42-4ce3-bd49-a8d22fe3404d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Data\Images\64">
+      <UniqueIdentifier>{95294edf-b6ed-4ae0-a6f8-473906401d06}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main_Win32.cpp">
@@ -51,5 +57,121 @@
     <ClInclude Include="GameConfig.hpp">
       <Filter>General</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\Run_x64\Data\Images\32\apple_alt_32.png">
+      <Filter>Data\Images\32</Filter>
+    </Image>
+    <Image Include="..\..\Run_x64\Data\Images\32\apple_green_32.png">
+      <Filter>Data\Images\32</Filter>
+    </Image>
+    <Image Include="..\..\Run_x64\Data\Images\32\apple_red_32.png">
+      <Filter>Data\Images\32</Filter>
+    </Image>
+    <Image Include="..\..\Run_x64\Data\Images\32\bomb_32.png">
+      <Filter>Data\Images\32</Filter>
+    </Image>
+    <Image Include="..\..\Run_x64\Data\Images\32\easter_egg_32.png">
+      <Filter>Data\Images\32</Filter>
+    </Image>
+    <Image Include="..\..\Run_x64\Data\Images\32\oliebol_32.png">
+      <Filter>Data\Images\32</Filter>
+    </Image>
+    <Image Include="..\..\Run_x64\Data\Images\32\snake_green_blob_32.png">
+      <Filter>Data\Images\32</Filter>
+    </Image>
+    <Image Include="..\..\Run_x64\Data\Images\32\snake_green_eyes_32.png">
+      <Filter>Data\Images\32</Filter>
+    </Image>
+    <Image Include="..\..\Run_x64\Data\Images\32\snake_green_head_32.png">
+      <Filter>Data\Images\32</Filter>
+    </Image>
+    <Image Include="..\..\Run_x64\Data\Images\32\snake_yellow_blob_32.png">
+      <Filter>Data\Images\32</Filter>
+    </Image>
+    <Image Include="..\..\Run_x64\Data\Images\32\snake_yellow_eyes_32.png">
+      <Filter>Data\Images\32</Filter>
+    </Image>
+    <Image Include="..\..\Run_x64\Data\Images\32\snake_yellow_head_32.png">
+      <Filter>Data\Images\32</Filter>
+    </Image>
+    <Image Include="..\..\Run_x64\Data\Images\32\wall_block_32_0.png">
+      <Filter>Data\Images\32</Filter>
+    </Image>
+    <Image Include="..\..\Run_x64\Data\Images\32\wall_block_32_1.png">
+      <Filter>Data\Images\32</Filter>
+    </Image>
+    <Image Include="..\..\Run_x64\Data\Images\32\wall_block_32_2.png">
+      <Filter>Data\Images\32</Filter>
+    </Image>
+    <Image Include="..\..\Run_x64\Data\Images\32\wall_block_32_3.png">
+      <Filter>Data\Images\32</Filter>
+    </Image>
+    <Image Include="..\..\Run_x64\Data\Images\32\wall_block_32_4.png">
+      <Filter>Data\Images\32</Filter>
+    </Image>
+    <Image Include="..\..\Run_x64\Data\Images\32\wall_block_32_5.png">
+      <Filter>Data\Images\32</Filter>
+    </Image>
+    <Image Include="..\..\Run_x64\Data\Images\32\wall_block_32_6.png">
+      <Filter>Data\Images\32</Filter>
+    </Image>
+    <Image Include="..\..\Run_x64\Data\Images\64\apple_alt_64.png">
+      <Filter>Data\Images\64</Filter>
+    </Image>
+    <Image Include="..\..\Run_x64\Data\Images\64\apple_green_64.png">
+      <Filter>Data\Images\64</Filter>
+    </Image>
+    <Image Include="..\..\Run_x64\Data\Images\64\apple_red_64.png">
+      <Filter>Data\Images\64</Filter>
+    </Image>
+    <Image Include="..\..\Run_x64\Data\Images\64\bomb_64.png">
+      <Filter>Data\Images\64</Filter>
+    </Image>
+    <Image Include="..\..\Run_x64\Data\Images\64\easter_egg_64.png">
+      <Filter>Data\Images\64</Filter>
+    </Image>
+    <Image Include="..\..\Run_x64\Data\Images\64\oliebol_64.png">
+      <Filter>Data\Images\64</Filter>
+    </Image>
+    <Image Include="..\..\Run_x64\Data\Images\64\snake_green_blob_64.png">
+      <Filter>Data\Images\64</Filter>
+    </Image>
+    <Image Include="..\..\Run_x64\Data\Images\64\snake_green_eyes_64.png">
+      <Filter>Data\Images\64</Filter>
+    </Image>
+    <Image Include="..\..\Run_x64\Data\Images\64\snake_green_head_64.png">
+      <Filter>Data\Images\64</Filter>
+    </Image>
+    <Image Include="..\..\Run_x64\Data\Images\64\snake_yellow_blob_64.png">
+      <Filter>Data\Images\64</Filter>
+    </Image>
+    <Image Include="..\..\Run_x64\Data\Images\64\snake_yellow_eyes_64.png">
+      <Filter>Data\Images\64</Filter>
+    </Image>
+    <Image Include="..\..\Run_x64\Data\Images\64\snake_yellow_head_64.png">
+      <Filter>Data\Images\64</Filter>
+    </Image>
+    <Image Include="..\..\Run_x64\Data\Images\64\wall_block_64_0.png">
+      <Filter>Data\Images\64</Filter>
+    </Image>
+    <Image Include="..\..\Run_x64\Data\Images\64\wall_block_64_1.png">
+      <Filter>Data\Images\64</Filter>
+    </Image>
+    <Image Include="..\..\Run_x64\Data\Images\64\wall_block_64_2.png">
+      <Filter>Data\Images\64</Filter>
+    </Image>
+    <Image Include="..\..\Run_x64\Data\Images\64\wall_block_64_3.png">
+      <Filter>Data\Images\64</Filter>
+    </Image>
+    <Image Include="..\..\Run_x64\Data\Images\64\wall_block_64_4.png">
+      <Filter>Data\Images\64</Filter>
+    </Image>
+    <Image Include="..\..\Run_x64\Data\Images\64\wall_block_64_5.png">
+      <Filter>Data\Images\64</Filter>
+    </Image>
+    <Image Include="..\..\Run_x64\Data\Images\64\wall_block_64_6.png">
+      <Filter>Data\Images\64</Filter>
+    </Image>
   </ItemGroup>
 </Project>
