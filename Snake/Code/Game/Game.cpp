@@ -10,6 +10,8 @@
 #include "Engine/Renderer/Renderer.hpp"
 #include "Engine/Renderer/Material.hpp"
 
+#include "Engine/Renderer/Mesh.hpp"
+
 #include "Engine/Services/ServiceLocator.hpp"
 #include "Engine/Services/IAppService.hpp"
 
@@ -18,13 +20,19 @@
 #include "Game/GameCommon.hpp"
 #include "Game/GameConfig.hpp"
 
+#include "Game/Wall.hpp"
+
 void Game::Initialize() noexcept {
     g_theRenderer->RegisterMaterialsFromFolder(FileUtils::GetKnownFolderPath(FileUtils::KnownPathID::GameMaterials));
     g_theRenderer->RegisterFontsFromFolder(FileUtils::GetKnownFolderPath(FileUtils::KnownPathID::GameFonts));
 
     _cameraController = OrthographicCameraController();
     _cameraController.SetPosition(Vector2::Zero);
+    _cameraController.SetZoomLevel(512.0f);
+
 }
+
+Wall wall;
 
 void Game::BeginFrame() noexcept {
     /* DO NOTHING */
@@ -37,20 +45,19 @@ void Game::Update(TimeUtils::FPSeconds deltaSeconds) noexcept {
 
     _ui_camera2D.Update(deltaSeconds);
     _cameraController.Update(deltaSeconds);
+
+    wall.Update(deltaSeconds);
+
 }
 
 void Game::Render() const noexcept {
     g_theRenderer->BeginRenderToBackbuffer();
 
+    _cameraController.SetModelViewProjectionBounds();
 
     //World View
-    g_theRenderer->SetMaterial(g_theRenderer->GetMaterial("__2D"));
     {
-        const auto S = Matrix4::CreateScaleMatrix(Vector2::One);
-        const auto R = Matrix4::I;
-        const auto T = Matrix4::I;
-        const auto M = Matrix4::MakeSRT(S, R, T);
-        g_theRenderer->DrawQuad2D(M, Rgba::ForestGreen);
+        wall.Render();
     }
 
     // HUD View
@@ -62,19 +69,6 @@ void Game::Render() const noexcept {
         const auto ui_cam_pos = Vector2::Zero;
         g_theRenderer->BeginHUDRender(_ui_camera2D, ui_cam_pos, ui_view_height);
 
-        {
-            const auto S = Matrix4::CreateScaleMatrix(Vector2::One * (1.0f + MathUtils::SineWaveDegrees(g_theRenderer->GetGameTime().count())));
-            static float r = 0.0f;
-            const std::string text = "Abrams 2022 Template";
-            const auto* font = g_theRenderer->GetFont("System32");
-            const auto T = Matrix4::I;
-            const auto nT = Matrix4::CreateTranslationMatrix(-Vector2{font->CalculateTextWidth(text), font->CalculateTextHeight(text)} * 0.5f);
-            const auto R = Matrix4::Create2DRotationDegreesMatrix(r);
-            static const float w = 90.0f;
-            r += g_theRenderer->GetGameFrameTime().count() * w;
-            const auto M = Matrix4::MakeRT(nT, Matrix4::MakeSRT(S, R, T));
-            g_theRenderer->DrawTextLine(M, font, text);
-        }
     }
 }
 
