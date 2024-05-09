@@ -1,0 +1,6 @@
+<material name="wall">
+    <shader src="Data/Shaders/wall.shader" />
+    <textures>
+        <diffuse src="Data/Images/wall_block_64_1.png" />
+    </textures>
+</material>
