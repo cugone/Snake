@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="General">
@@ -74,60 +74,61 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\..\Run_x64\Data\Images\apple_alt_64.png">
+    <Image Include="..\..\Run_x64\Data\Images\Assets\apple_alt_64.png">
       <Filter>Data\Images</Filter>
     </Image>
-    <Image Include="..\..\Run_x64\Data\Images\apple_green_64.png">
+    <Image Include="..\..\Run_x64\Data\Images\Assets\apple_green_64.png">
       <Filter>Data\Images</Filter>
     </Image>
-    <Image Include="..\..\Run_x64\Data\Images\apple_red_64.png">
+    <Image Include="..\..\Run_x64\Data\Images\Assets\apple_red_64.png">
       <Filter>Data\Images</Filter>
     </Image>
-    <Image Include="..\..\Run_x64\Data\Images\bomb_64.png">
+    <Image Include="..\..\Run_x64\Data\Images\Assets\bomb_64.png">
       <Filter>Data\Images</Filter>
     </Image>
-    <Image Include="..\..\Run_x64\Data\Images\easter_egg_64.png">
+    <Image Include="..\..\Run_x64\Data\Images\Assets\easter_egg_64.png">
       <Filter>Data\Images</Filter>
     </Image>
-    <Image Include="..\..\Run_x64\Data\Images\oliebol_64.png">
+    <Image Include="..\..\Run_x64\Data\Images\Assets\oliebol_64.png">
       <Filter>Data\Images</Filter>
     </Image>
-    <Image Include="..\..\Run_x64\Data\Images\snake_green_blob_64.png">
+    <Image Include="..\..\Run_x64\Data\Images\Assets\snake_green_blob_64.png">
       <Filter>Data\Images</Filter>
     </Image>
-    <Image Include="..\..\Run_x64\Data\Images\snake_green_eyes_64.png">
+    <Image Include="..\..\Run_x64\Data\Images\Assets\snake_green_eyes_64.png">
       <Filter>Data\Images</Filter>
     </Image>
-    <Image Include="..\..\Run_x64\Data\Images\snake_green_head_64.png">
+    <Image Include="..\..\Run_x64\Data\Images\Assets\snake_green_head_64.png">
       <Filter>Data\Images</Filter>
     </Image>
-    <Image Include="..\..\Run_x64\Data\Images\snake_yellow_blob_64.png">
+    <Image Include="..\..\Run_x64\Data\Images\Assets\snake_yellow_blob_64.png">
       <Filter>Data\Images</Filter>
     </Image>
-    <Image Include="..\..\Run_x64\Data\Images\snake_yellow_eyes_64.png">
+    <Image Include="..\..\Run_x64\Data\Images\Assets\snake_yellow_eyes_64.png">
       <Filter>Data\Images</Filter>
     </Image>
-    <Image Include="..\..\Run_x64\Data\Images\snake_yellow_head_64.png">
+    <Image Include="..\..\Run_x64\Data\Images\Assets\snake_yellow_head_64.png">
       <Filter>Data\Images</Filter>
     </Image>
-    <Image Include="..\..\Run_x64\Data\Images\wall_block_64_0.png">
+    <Image Include="..\..\Run_x64\Data\Images\Assets\wall_block_64_0.png">
       <Filter>Data\Images</Filter>
     </Image>
-    <Image Include="..\..\Run_x64\Data\Images\wall_block_64_1.png">
+    <Image Include="..\..\Run_x64\Data\Images\Assets\wall_block_64_1.png">
       <Filter>Data\Images</Filter>
     </Image>
-    <Image Include="..\..\Run_x64\Data\Images\wall_block_64_2.png">
+    <Image Include="..\..\Run_x64\Data\Images\Assets\wall_block_64_2.png">
       <Filter>Data\Images</Filter>
     </Image>
-    <Image Include="..\..\Run_x64\Data\Images\wall_block_64_3.png">
+    <Image Include="..\..\Run_x64\Data\Images\Assets\wall_block_64_3.png">
       <Filter>Data\Images</Filter>
     </Image>
-    <Image Include="..\..\Run_x64\Data\Images\wall_block_64_4.png">
+    <Image Include="..\..\Run_x64\Data\Images\Assets\wall_block_64_4.png">
       <Filter>Data\Images</Filter>
     </Image>
-    <Image Include="..\..\Run_x64\Data\Images\wall_block_64_5.png">
+    <Image Include="..\..\Run_x64\Data\Images\Assets\wall_block_64_5.png">
       <Filter>Data\Images</Filter>
     </Image>
-    <Image Include="..\..\Run_x64\Data\Images\wall_block_64_6.png">
+    <Image Include="..\..\Run_x64\Data\Images\Assets\wall_block_64_6.png">
       <Filter>Data\Images</Filter>
     </Image>
   </ItemGroup>
