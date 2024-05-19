@@ -65,10 +65,10 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\Run_x64\Data\Materials\wall.material">
+    <None Include="..\..\Run_x64\Data\Materials\tile.material">
       <Filter>Data\Materials</Filter>
     </None>
-    <None Include="..\..\Run_x64\Data\Shaders\wall.shader">
+    <None Include="..\..\Run_x64\Data\Shaders\tile.shader">
       <Filter>Data\Shaders</Filter>
     </None>
   </ItemGroup>

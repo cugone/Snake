@@ -1,5 +1,6 @@
-<shader name="wall">
-    <shaderprogram src="__unlit" />
+<shader name="tile">
+    <shaderprogram src="Data/ShaderPrograms/tile_VS.cso" />
+    <shaderprogram src="Data/ShaderPrograms/tile_PS.cso" />
     <raster>
         <fill>solid</fill>
         <cull>none</cull>
