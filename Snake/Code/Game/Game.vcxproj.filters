@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="General">
@@ -71,6 +71,12 @@
     <None Include="..\..\Run_x64\Data\Shaders\tile.shader">
       <Filter>Data\Shaders</Filter>
     </None>
+    <None Include="..\..\Run_x64\Data\ShaderPrograms\tile_PS.cso">
+      <Filter>Data\ShaderPrograms</Filter>
+    </None>
+    <None Include="..\..\Run_x64\Data\ShaderPrograms\tile_VS.cso">
+      <Filter>Data\ShaderPrograms</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\..\Run_x64\Data\Images\Assets\apple_alt_64.png">
@@ -130,5 +136,10 @@
     <Image Include="..\..\Run_x64\Data\Images\Assets\wall_block_64_6.png">
       <Filter>Data\Images</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="..\..\Run_x64\Data\ShaderPrograms\tile.hlsl">
+      <Filter>Data\ShaderPrograms</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>
