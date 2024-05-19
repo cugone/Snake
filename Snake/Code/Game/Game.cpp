@@ -2,6 +2,8 @@
 
 #include "Engine/Core/EngineCommon.hpp"
 #include "Engine/Core/KerningFont.hpp"
+#include "Engine/Core/Rgba.hpp"
+
 
 #include "Engine/Input/InputSystem.hpp"
 
@@ -11,6 +13,9 @@
 #include "Engine/Renderer/Material.hpp"
 
 #include "Engine/Renderer/Mesh.hpp"
+
+#include "Engine/Renderer/FrameBuffer.hpp"
+#include "Engine/Platform/DirectX/DirectX11FrameBuffer.hpp"
 
 #include "Engine/Services/ServiceLocator.hpp"
 #include "Engine/Services/IAppService.hpp"
@@ -22,20 +27,33 @@
 
 #include "Game/Wall.hpp"
 
+Game::~Game() {
+    map.reset();
+    m_frameBuffer.reset();
+}
+
 void Game::Initialize() noexcept {
+    {
+        FrameBufferDesc desc{};
+        desc.width = 1600;
+        desc.height = 900;
+        desc.SwapChainTarget = true;
+        m_frameBuffer = FrameBuffer::Create(desc);
+    }
+    {
+        auto texture = g_theRenderer->Create2DTextureArrayFromFolder(std::filesystem::path{ "Data/Images/Assets/" });
+        GUARANTEE_OR_DIE(texture && g_theRenderer->RegisterTexture("assets", std::move(texture)), "Failed to register texture array of assets.");
+        g_theRenderer->RegisterTexturesFromFolder(std::filesystem::path{ "Data/Images/Assets/" });
+    }
+
     g_theRenderer->RegisterMaterialsFromFolder(FileUtils::GetKnownFolderPath(FileUtils::KnownPathID::GameMaterials));
     g_theRenderer->RegisterFontsFromFolder(FileUtils::GetKnownFolderPath(FileUtils::KnownPathID::GameFonts));
 
-    _cameraController = OrthographicCameraController();
-    _cameraController.SetPosition(Vector2::Zero);
-    _cameraController.SetZoomLevel(512.0f);
-
+    map = std::make_unique<Map>();
 }
 
-Wall wall;
-
 void Game::BeginFrame() noexcept {
-    /* DO NOTHING */
+    map->BeginFrame();
 }
 
 void Game::Update(TimeUtils::FPSeconds deltaSeconds) noexcept {
@@ -44,36 +62,27 @@ void Game::Update(TimeUtils::FPSeconds deltaSeconds) noexcept {
     HandlePlayerInput(deltaSeconds);
 
     _ui_camera2D.Update(deltaSeconds);
-    _cameraController.Update(deltaSeconds);
 
-    wall.Update(deltaSeconds);
+    map->Update(deltaSeconds);
 
 }
 
 void Game::Render() const noexcept {
-    g_theRenderer->BeginRenderToBackbuffer();
 
-    _cameraController.SetModelViewProjectionBounds();
+    m_frameBuffer->Bind(Rgba::ForestGreen);
 
     //World View
     {
-        wall.Render();
+        map->Render();
     }
 
     // HUD View
-    {
-        const auto ui_view_height = static_cast<float>(GetSettings().GetWindowHeight());
-        const auto ui_view_width = ui_view_height * _ui_camera2D.GetAspectRatio();
-        const auto ui_view_extents = Vector2{ui_view_width, ui_view_height};
-        const auto ui_view_half_extents = ui_view_extents * 0.5f;
-        const auto ui_cam_pos = Vector2::Zero;
-        g_theRenderer->BeginHUDRender(_ui_camera2D, ui_cam_pos, ui_view_height);
 
-    }
 }
 
 void Game::EndFrame() noexcept {
-    /* DO NOTHING */
+    map->EndFrame();
+    m_frameBuffer->Unbind();
 }
 
 const GameSettings& Game::GetSettings() const noexcept {
