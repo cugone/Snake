@@ -73,7 +73,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\..\Run_x64\Data\Images\apple_alt_64.png">
     <Image Include="..\..\Run_x64\Data\Images\Assets\apple_alt_64.png">
       <Filter>Data\Images</Filter>
     </Image>
