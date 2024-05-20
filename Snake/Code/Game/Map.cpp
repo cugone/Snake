@@ -7,11 +7,38 @@ Map::Map() noexcept {
     m_cameraController.SetPosition(Vector2{895.0f, 496.0f});
     m_cameraController.SetZoomLevel(512.0f);
     m_cameraController.SetSpeedMultiplier(2048);
-    m_walls.reserve(100);
-    for(auto y = 0.0f; y < 32.0f; ++y) {
-        for (auto x = 0.0f; x < 57.0f; ++x) {
-            m_walls.push_back(Wall{ Vector2{x, y}, Wall::Direction::Full });
-        }
+    const auto width = 57.0f;
+    const auto height = 32.0f;
+    const auto reserve_count = 2.0f * (width + height - 2.0f);
+    m_walls.reserve(static_cast<std::size_t>(reserve_count));
+
+    //Horizontal Endcaps
+    m_walls.push_back(Wall{ Vector2{1.0f, 0.0f}, Wall::Direction::Left });
+    m_walls.push_back(Wall{ Vector2{width - 2.0f, 0.0f}, Wall::Direction::Right});
+    m_walls.push_back(Wall{ Vector2{1.0f, height - 1.0f}, Wall::Direction::Left});
+    m_walls.push_back(Wall{ Vector2{width - 2.0f, height - 1.0f}, Wall::Direction::Right });
+    
+    //Vertical Endcaps
+    m_walls.push_back(Wall{ Vector2{0.0f, 1.0f}, Wall::Direction::Down });
+    m_walls.push_back(Wall{ Vector2{0.0f, height - 2.0f}, Wall::Direction::Up});
+    m_walls.push_back(Wall{ Vector2{width - 1.0f, 1.0f}, Wall::Direction::Down});
+    m_walls.push_back(Wall{ Vector2{width - 1.0f, height - 2.0f}, Wall::Direction::Up});
+
+    //Corners
+    m_walls.push_back(Wall{ Vector2{0.0f, 0.0f}, Wall::Direction::Full });
+    m_walls.push_back(Wall{ Vector2{width - 1.0f, 0.0f}, Wall::Direction::Full});
+    m_walls.push_back(Wall{ Vector2{width - 1.0f, height - 1.0f}, Wall::Direction::Full });
+    m_walls.push_back(Wall{ Vector2{0.0f, height - 1.0f}, Wall::Direction::Full});
+
+    //Top/Bottom
+    for(auto x = 1.0f; x < width - 1.0f; ++x) {
+        m_walls.push_back(Wall{ Vector2{x, 0.0f}, Wall::Direction::Horizontal });
+        m_walls.push_back(Wall{ Vector2{x, height - 1.0f}, Wall::Direction::Horizontal });
+    }
+    //Left/Right
+    for (auto y = 1.0f; y < height - 1.0f; ++y) {
+        m_walls.push_back(Wall{ Vector2{0.0f, y}, Wall::Direction::Vertical});
+        m_walls.push_back(Wall{ Vector2{width - 1.0f, y}, Wall::Direction::Vertical});
     }
 }
 
