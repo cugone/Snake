@@ -49,7 +49,6 @@ Wall::Wall(const Vector2& position, const Wall::Direction& direction) noexcept
     if (const auto& cbs = r->GetMaterial("tile")->GetShader()->GetConstantBuffers(); !cbs.empty()) {
         selection_state_cb = &cbs[0].get();
     }
-    this->direction = static_cast<Wall::Direction>(GetRandomDirection());
 }
 
 void Wall::BeginFrame() noexcept {
