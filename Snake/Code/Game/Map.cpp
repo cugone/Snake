@@ -19,10 +19,10 @@ Map::Map() noexcept {
     m_walls.push_back(Wall{ Vector2{width - 2.0f, height - 1.0f}, Wall::Direction::Right });
     
     //Vertical Endcaps
-    m_walls.push_back(Wall{ Vector2{0.0f, 1.0f}, Wall::Direction::Down });
-    m_walls.push_back(Wall{ Vector2{0.0f, height - 2.0f}, Wall::Direction::Up});
-    m_walls.push_back(Wall{ Vector2{width - 1.0f, 1.0f}, Wall::Direction::Down});
-    m_walls.push_back(Wall{ Vector2{width - 1.0f, height - 2.0f}, Wall::Direction::Up});
+    m_walls.push_back(Wall{ Vector2{0.0f, 1.0f}, Wall::Direction::Up });
+    m_walls.push_back(Wall{ Vector2{0.0f, height - 2.0f}, Wall::Direction::Down});
+    m_walls.push_back(Wall{ Vector2{width - 1.0f, 1.0f}, Wall::Direction::Up});
+    m_walls.push_back(Wall{ Vector2{width - 1.0f, height - 2.0f}, Wall::Direction::Down});
 
     //Corners
     m_walls.push_back(Wall{ Vector2{0.0f, 0.0f}, Wall::Direction::Full });
@@ -31,12 +31,12 @@ Map::Map() noexcept {
     m_walls.push_back(Wall{ Vector2{0.0f, height - 1.0f}, Wall::Direction::Full});
 
     //Top/Bottom
-    for(auto x = 1.0f; x < width - 1.0f; ++x) {
+    for(auto x = 2.0f; x < width - 2.0f; ++x) {
         m_walls.push_back(Wall{ Vector2{x, 0.0f}, Wall::Direction::Horizontal });
         m_walls.push_back(Wall{ Vector2{x, height - 1.0f}, Wall::Direction::Horizontal });
     }
     //Left/Right
-    for (auto y = 1.0f; y < height - 1.0f; ++y) {
+    for (auto y = 2.0f; y < height - 2.0f; ++y) {
         m_walls.push_back(Wall{ Vector2{0.0f, y}, Wall::Direction::Vertical});
         m_walls.push_back(Wall{ Vector2{width - 1.0f, y}, Wall::Direction::Vertical});
     }
@@ -49,7 +49,7 @@ void Map::BeginFrame() noexcept {
 void Map::Update(TimeUtils::FPSeconds deltaSeconds) noexcept {
     m_cameraController.Update(deltaSeconds);
     for(auto& wall : m_walls) {
-        wall.AppendToMesh(m_builder);
+        wall.Update(deltaSeconds);
     }
 }
 

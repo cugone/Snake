@@ -32,8 +32,6 @@ public:
     void Render() const;
     void EndFrame() noexcept;
 
-    void AppendToMesh(Mesh::Builder& builder) noexcept;
-
     Vector2 position{};
     Direction direction{Direction::Full};
 protected:
@@ -45,4 +43,5 @@ private:
 
     ConstantBuffer* selection_state_cb{ nullptr };
     mutable selection_state_t selection_state{};
+    Mesh::Builder builder{};
 };

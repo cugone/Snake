@@ -52,23 +52,10 @@ Wall::Wall(const Vector2& position, const Wall::Direction& direction) noexcept
 }
 
 void Wall::BeginFrame() noexcept {
-    /* DO NOTHING */
+    builder.Clear();
 }
 
 void Wall::Update([[maybe_unused]] TimeUtils::FPSeconds deltaSeconds) noexcept {
-    /* DO NOTHING */
-}
-
-void Wall::Render() const {
-    selection_state.direction_padding3.x = WallDirectionToTextureIndexOffset(direction);
-    selection_state_cb->Update(*g_theRenderer->GetDeviceContext(), &selection_state);
-}
-
-void Wall::EndFrame() noexcept {
-    /* DO NOTHING */
-}
-
-void Wall::AppendToMesh(Mesh::Builder& builder) noexcept {
 
     builder.Begin(PrimitiveType::Triangles);
 
@@ -91,4 +78,14 @@ void Wall::AppendToMesh(Mesh::Builder& builder) noexcept {
 
     builder.End(g_theRenderer->GetMaterial("tile"));
 
+}
+
+void Wall::Render() const {
+    selection_state.direction_padding3.x = WallDirectionToTextureIndexOffset(direction);
+    selection_state_cb->Update(*g_theRenderer->GetDeviceContext(), &selection_state);
+    Mesh::Render(builder);
+}
+
+void Wall::EndFrame() noexcept {
+    /* DO NOTHING */
 }
