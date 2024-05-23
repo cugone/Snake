@@ -41,6 +41,12 @@ Wall::Direction GetRandomDirection() noexcept {
     return static_cast<Wall::Direction>(MathUtils::GetRandomLessThan(7));
 }
 
+Wall::Wall() noexcept
+    : Wall(Vector2::Zero, Wall::Direction::Full)
+{
+    /* DO NOTHING */
+}
+
 Wall::Wall(const Vector2& position, const Wall::Direction& direction) noexcept 
 : position(position)
 , direction(direction)

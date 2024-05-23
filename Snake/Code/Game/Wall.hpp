@@ -19,7 +19,7 @@ public:
         Vertical,
         Down,
     };
-    Wall() = default;
+    Wall() noexcept;
     Wall(const Vector2& position, const Direction& direction) noexcept;
     Wall(const Wall& other) = default;
     Wall(Wall&& rother) = default;
