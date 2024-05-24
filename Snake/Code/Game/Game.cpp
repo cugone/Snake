@@ -74,6 +74,9 @@ void Game::Render() const noexcept {
     //World View
     {
         map->Render();
+        if (_debug_render) {
+            map->DebugRender();
+        }
     }
 
     // HUD View
@@ -104,6 +107,9 @@ void Game::HandleKeyboardInput(TimeUtils::FPSeconds /*deltaSeconds*/) {
         auto* app = ServiceLocator::get<IAppService>();
         app->SetIsQuitting(true);
         return;
+    }
+    if(g_theInputSystem->WasKeyJustPressed(KeyCode::F1)) {
+        _debug_render = !_debug_render;
     }
 }
 
