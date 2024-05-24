@@ -49,6 +49,9 @@
     <ClCompile Include="Food.cpp">
       <Filter>Game</Filter>
     </ClCompile>
+    <ClCompile Include="Snake.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameCommon.hpp">
@@ -67,6 +70,9 @@
       <Filter>Game</Filter>
     </ClInclude>
     <ClInclude Include="Food.hpp">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Snake.hpp">
       <Filter>Game</Filter>
     </ClInclude>
   </ItemGroup>

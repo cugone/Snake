@@ -153,6 +153,7 @@
     <ClCompile Include="GameConfig.cpp" />
     <ClCompile Include="Main_Win32.cpp" />
     <ClCompile Include="Map.cpp" />
+    <ClCompile Include="Snake.cpp" />
     <ClCompile Include="Wall.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -161,6 +162,7 @@
     <ClInclude Include="GameCommon.hpp" />
     <ClInclude Include="GameConfig.hpp" />
     <ClInclude Include="Map.hpp" />
+    <ClInclude Include="Snake.hpp" />
     <ClInclude Include="Wall.hpp" />
   </ItemGroup>
   <ItemGroup>
