@@ -43,18 +43,10 @@ Food::Food() noexcept
 Food::Food(const Vector2& position) noexcept
     : position(position)
 {
-    auto* r = ServiceLocator::get<IRendererService>();
-    if (const auto& cbs = r->GetMaterial("tile")->GetShader()->GetConstantBuffers(); !cbs.empty()) {
-        selection_state_cb = &cbs[0].get();
-    }
     type = GetRandomFoodType();
 }
 
-void Food::BeginFrame() noexcept {
-    builder.Clear();
-}
-
-void Food::Update(TimeUtils::FPSeconds /*deltaSeconds*/) noexcept {
+void Food::AddMeshToBuilder(Mesh::Builder& builder) noexcept {
 
     builder.Begin(PrimitiveType::Triangles);
 
@@ -62,29 +54,19 @@ void Food::Update(TimeUtils::FPSeconds /*deltaSeconds*/) noexcept {
 
     const auto uvs = AABB2::Zero_to_One;
     builder.SetUV(Vector2{ uvs.mins.x, uvs.maxs.y });
-    builder.AddVertex(position + Vector2{ -0.5f, +0.5f });
+    builder.AddVertex(Vector3{position + Vector2{ -0.5f, +0.5f }, FoodTypeToTextureIndexOffset(type)});
 
     builder.SetUV(Vector2{ uvs.mins.x, uvs.mins.y });
-    builder.AddVertex(position + Vector2{ -0.5f, -0.5f });
+    builder.AddVertex(Vector3{position + Vector2{ -0.5f, -0.5f }, FoodTypeToTextureIndexOffset(type) });
 
     builder.SetUV(Vector2{ uvs.maxs.x, uvs.mins.y });
-    builder.AddVertex(position + Vector2{ +0.5f, -0.5f });
+    builder.AddVertex(Vector3{position + Vector2{ +0.5f, -0.5f }, FoodTypeToTextureIndexOffset(type) });
 
     builder.SetUV(Vector2{ uvs.maxs.x, uvs.maxs.y });
-    builder.AddVertex(position + Vector2{ +0.5f, +0.5f });
+    builder.AddVertex(Vector3{position + Vector2{ +0.5f, +0.5f }, FoodTypeToTextureIndexOffset(type) });
 
     builder.AddIndicies(Mesh::Builder::Primitive::Quad);
 
     builder.End(g_theRenderer->GetMaterial("tile"));
 
-}
-
-void Food::Render() const noexcept {
-    selection_state.type_padding3.x = FoodTypeToTextureIndexOffset(type);
-    selection_state_cb->Update(*g_theRenderer->GetDeviceContext(), &selection_state);
-    Mesh::Render(builder);
-}
-
-void Food::EndFrame() noexcept {
-    /* DO NOTHING */
 }

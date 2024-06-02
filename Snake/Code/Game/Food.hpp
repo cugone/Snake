@@ -27,23 +27,11 @@ public:
     Food& operator=(Food&& other) = default;
     ~Food() = default;
 
-    void BeginFrame() noexcept;
-    void Update(TimeUtils::FPSeconds deltaSeconds) noexcept;
-    void Render() const noexcept;
-    void EndFrame() noexcept;
+    void AddMeshToBuilder(Mesh::Builder& builder) noexcept;
 
     Vector2 position{ Vector2::One };
     Food::Type type{Food::Type::Apple_Red1};
 protected:
 private:
-
-
-    struct selection_state_t {
-        Vector4 type_padding3;
-    };
-
-    ConstantBuffer* selection_state_cb{ nullptr };
-    mutable selection_state_t selection_state{};
-    Mesh::Builder builder{};
 
 };

@@ -51,17 +51,10 @@ Wall::Wall(const Vector2& position, const Wall::Direction& direction) noexcept
 : position(position)
 , direction(direction)
 {
-    auto* r = ServiceLocator::get<IRendererService>();
-    if (const auto& cbs = r->GetMaterial("tile")->GetShader()->GetConstantBuffers(); !cbs.empty()) {
-        selection_state_cb = &cbs[0].get();
-    }
+    /* DO NOTHING */
 }
 
-void Wall::BeginFrame() noexcept {
-    builder.Clear();
-}
-
-void Wall::Update([[maybe_unused]] TimeUtils::FPSeconds deltaSeconds) noexcept {
+void Wall::AddMeshToBuilder(Mesh::Builder& builder) noexcept {
 
     builder.Begin(PrimitiveType::Triangles);
 
@@ -69,29 +62,19 @@ void Wall::Update([[maybe_unused]] TimeUtils::FPSeconds deltaSeconds) noexcept {
 
     const auto uvs = AABB2::Zero_to_One;
     builder.SetUV(Vector2{ uvs.mins.x, uvs.maxs.y });
-    builder.AddVertex(position + Vector2{ -0.5f, +0.5f });
+    builder.AddVertex(Vector3{position + Vector2{ -0.5f, +0.5f }, WallDirectionToTextureIndexOffset(direction)});
 
     builder.SetUV(Vector2{ uvs.mins.x, uvs.mins.y });
-    builder.AddVertex(position + Vector2{ -0.5f, -0.5f });
+    builder.AddVertex(Vector3{position + Vector2{ -0.5f, -0.5f }, WallDirectionToTextureIndexOffset(direction) });
 
     builder.SetUV(Vector2{ uvs.maxs.x, uvs.mins.y });
-    builder.AddVertex(position + Vector2{ +0.5f, -0.5f });
+    builder.AddVertex(Vector3{position + Vector2{ +0.5f, -0.5f }, WallDirectionToTextureIndexOffset(direction) });
 
     builder.SetUV(Vector2{ uvs.maxs.x, uvs.maxs.y });
-    builder.AddVertex(position + Vector2{ +0.5f, +0.5f });
+    builder.AddVertex(Vector3{position + Vector2{ +0.5f, +0.5f }, WallDirectionToTextureIndexOffset(direction) });
 
     builder.AddIndicies(Mesh::Builder::Primitive::Quad);
 
     builder.End(g_theRenderer->GetMaterial("tile"));
 
-}
-
-void Wall::Render() const {
-    selection_state.direction_padding3.x = WallDirectionToTextureIndexOffset(direction);
-    selection_state_cb->Update(*g_theRenderer->GetDeviceContext(), &selection_state);
-    Mesh::Render(builder);
-}
-
-void Wall::EndFrame() noexcept {
-    /* DO NOTHING */
 }

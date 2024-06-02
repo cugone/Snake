@@ -10,6 +10,7 @@
 
 #include "Game/Wall.hpp"
 #include "Game/Food.hpp"
+#include "Game/Snake.hpp"
 
 #include <vector>
 
@@ -41,6 +42,7 @@ private:
     std::vector<Wall> m_walls{};
     Food m_food{ Vector2::Zero };
     OrthographicCameraController m_cameraController{};
+    Snake m_snake{this, Vector2::Zero, Rgba::Green};
     AABB2 m_bounds{AABB2::Neg_One_to_One};
     AABB2 m_validFoodBounds{};
     bool m_canSpawnFood{false};
