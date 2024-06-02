@@ -11,6 +11,8 @@
 #include "Engine/Renderer/Renderer.hpp"
 #include "Engine/Renderer/ConstantBuffer.hpp"
 
+#include <type_traits>
+
 constexpr static float wall_index_offset = 12.0f;
 
 constexpr float WallDirectionToTextureIndexOffset(Wall::Direction direction) noexcept;
@@ -38,7 +40,7 @@ constexpr float WallDirectionToTextureIndexOffset(Wall::Direction direction) noe
 }
 
 Wall::Direction GetRandomDirection() noexcept {
-    return static_cast<Wall::Direction>(MathUtils::GetRandomLessThan(7));
+    return static_cast<Wall::Direction>(MathUtils::GetRandomLessThan(static_cast<std::underlying_type_t<Wall::Direction>(Wall::Direction::Max)));
 }
 
 Wall::Wall() noexcept

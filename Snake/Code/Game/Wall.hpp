@@ -18,6 +18,7 @@ public:
         Up,
         Vertical,
         Down,
+        Max,
     };
     Wall() noexcept;
     Wall(const Vector2& position, const Direction& direction) noexcept;
