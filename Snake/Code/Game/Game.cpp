@@ -59,6 +59,7 @@ void Game::BeginFrame() noexcept {
 void Game::Update(TimeUtils::FPSeconds deltaSeconds) noexcept {
     g_theRenderer->UpdateGameTime(deltaSeconds);
 
+    HandleDebugInput(deltaSeconds);
     HandlePlayerInput(deltaSeconds);
 
     _ui_camera2D.Update(deltaSeconds);
@@ -121,6 +122,10 @@ void Game::HandleMouseInput(TimeUtils::FPSeconds /*deltaSeconds*/) {
 
 }
 
+void Game::ShowStatsWindow() const noexcept {
+    g_theUISystem->ToggleImguiMetricsWindow();
+}
+
 void Game::HandleDebugInput(TimeUtils::FPSeconds deltaSeconds) {
     HandleDebugKeyboardInput(deltaSeconds);
     HandleDebugMouseInput(deltaSeconds);
@@ -129,6 +134,9 @@ void Game::HandleDebugInput(TimeUtils::FPSeconds deltaSeconds) {
 void Game::HandleDebugKeyboardInput(TimeUtils::FPSeconds /*deltaSeconds*/) {
     if(g_theUISystem->WantsInputKeyboardCapture()) {
         return;
+    }
+    if(g_theInputSystem->WasKeyJustPressed(KeyCode::F2)) {
+        ShowStatsWindow();
     }
     if(g_theInputSystem->WasKeyJustPressed(KeyCode::F4)) {
         g_theUISystem->ToggleImguiDemoWindow();

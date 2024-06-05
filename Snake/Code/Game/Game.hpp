@@ -30,6 +30,7 @@ public:
     GameSettings& GetSettings() noexcept override;
 protected:
 private:
+    void ShowStatsWindow() const noexcept;
 
     void HandleDebugInput(TimeUtils::FPSeconds deltaSeconds);
     void HandleDebugKeyboardInput(TimeUtils::FPSeconds deltaSeconds);
@@ -44,5 +45,6 @@ private:
     mutable std::shared_ptr<FrameBuffer> m_frameBuffer{};
     std::unique_ptr<Map> map{};
     bool _debug_render{false};
+
 };
 
