@@ -64,6 +64,7 @@ void Map::BeginFrame() noexcept {
     m_builder.Clear();
     if (m_canSpawnFood) {
         SpawnFoodAtRandom();
+        m_canSpawnFood = false;
     }
 }
 
@@ -82,7 +83,7 @@ void Map::Update(TimeUtils::FPSeconds deltaSeconds) noexcept {
         player_bounds.SetPosition(m_snake.GetHeadPosition());
 
         if(MathUtils::DoAABBsOverlap(food_bounds, player_bounds)) {
-            SpawnFoodAtRandom();
+            m_canSpawnFood = true;
         }
     }
 }
