@@ -137,3 +137,7 @@ void Map::SpawnFoodAtRandom() noexcept {
     SpawnFoodAt(MathUtils::GetRandomPointInside(m_validFoodBounds));
     m_canSpawnFood = false;
 }
+
+Vector2 Map::GetDimensions() const noexcept {
+    return m_bounds.CalcDimensions();
+}

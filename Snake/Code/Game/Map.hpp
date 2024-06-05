@@ -36,6 +36,8 @@ public:
     void SpawnFoodAt(const Vector2& position) noexcept;
     void SpawnFoodAtRandom() noexcept;
 
+    Vector2 GetDimensions() const noexcept;
+
 protected:
 private:
     Mesh::Builder m_builder{};
