@@ -40,7 +40,7 @@ constexpr float WallDirectionToTextureIndexOffset(Wall::Direction direction) noe
 }
 
 Wall::Direction GetRandomDirection() noexcept {
-    return static_cast<Wall::Direction>(MathUtils::GetRandomLessThan(static_cast<std::underlying_type_t<Wall::Direction>(Wall::Direction::Max)));
+    return static_cast<Wall::Direction>(MathUtils::GetRandomLessThan(static_cast<std::underlying_type_t<Wall::Direction>>(Wall::Direction::Max)));
 }
 
 Wall::Wall() noexcept
