@@ -24,7 +24,7 @@ public:
     Snake& operator=(Snake&& other) = default;
     ~Snake() = default;
 
-    Snake(Map* parent_map, const Vector2& position, const Rgba& color) noexcept;
+    Snake(Map* parent_map, const Rgba& color) noexcept;
 
     void Update(TimeUtils::FPSeconds deltaSeconds) noexcept;
     void AddMeshToBuilder(Mesh::Builder& builder) noexcept;
@@ -41,16 +41,11 @@ public:
 
 protected:
 private:
-
-    struct selection_t {
-        Vector4 selection_padding3{ Vector4::X_Axis };
-    };
-    std::vector<Vector2> m_positions{};
-    Vector2 m_currentPosition{};
     Vector2 m_velocity{};
     float m_speed{10.0f};
     std::vector<SnakeSegment> m_segments{};
     Stopwatch m_blinkrate{};
     Map* m_map{nullptr};
     Rgba m_color{Rgba::Green};
+    
 };
