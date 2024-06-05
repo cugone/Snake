@@ -93,8 +93,8 @@ void Map::Render() const noexcept {
 
     const auto S = Matrix4::CreateScaleMatrix(Vector2::One * 32.0f);
     const auto R = Matrix4::I;
-    auto T = Matrix4::I;
-    auto M = Matrix4::MakeSRT(S, R, T);
+    const auto T = Matrix4::I;
+    const auto M = Matrix4::MakeSRT(S, R, T);
     g_theRenderer->SetModelMatrix(M);
 
 
