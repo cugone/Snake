@@ -33,13 +33,14 @@ public:
     const OrthographicCameraController& GetCameraController() const noexcept;
     OrthographicCameraController& GetCameraController() noexcept;
 
-    void SpawnFoodAt(const Vector2& position) noexcept;
-    void SpawnFoodAtRandom() noexcept;
-
     Vector2 GetDimensions() const noexcept;
 
 protected:
 private:
+
+    void SpawnFoodAt(const Vector2& position) noexcept;
+    void SpawnFoodAtRandom() noexcept;
+
     Mesh::Builder m_builder{};
     std::vector<Wall> m_walls{};
     Food m_food{ Vector2::Zero };
