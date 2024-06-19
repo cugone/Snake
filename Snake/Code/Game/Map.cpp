@@ -12,17 +12,16 @@ Map::Map() noexcept {
     m_cameraController.SetZoomLevel(512.0f);
     m_cameraController.SetSpeedMultiplier(2048);
 
-    m_bounds.ScalePadding(55.5f * 0.5f, 30.5f * 0.5f);
+    m_worldBounds.ScalePadding(55.5f * 0.5f, 30.5f * 0.5f);
+    m_validFoodBounds = m_worldBounds;
+    m_validFoodBounds.AddPaddingToSides(-1.0f, -1.0f);
 
-    m_validFoodBounds = m_bounds;
-    m_validFoodBounds.AddPaddingToSides(-0.75f, -0.75f);
-
-    const auto horizontal_start = m_bounds.mins.x - 1.0f;
-    const auto horizontal_end = m_bounds.maxs.x + 1.0f;
-    const auto vertical_start = m_bounds.mins.y - 1.0f;
-    const auto vertical_end = m_bounds.maxs.y + 1.0f;
-    const auto width = m_bounds.CalcDimensions().x;
-    const auto height = m_bounds.CalcDimensions().y;
+    const auto horizontal_start = m_worldBounds.mins.x - 1.0f;
+    const auto horizontal_end = m_worldBounds.maxs.x + 1.0f;
+    const auto vertical_start = m_worldBounds.mins.y - 1.0f;
+    const auto vertical_end = m_worldBounds.maxs.y + 1.0f;
+    const auto width = m_worldBounds.CalcDimensions().x;
+    const auto height = m_worldBounds.CalcDimensions().y;
     const auto reserve_count = 2.0f * (width + height - 2.0f);
     m_walls.reserve(static_cast<std::size_t>(reserve_count));
 
@@ -69,6 +68,9 @@ void Map::BeginFrame() noexcept {
 }
 
 void Map::Update(TimeUtils::FPSeconds deltaSeconds) noexcept {
+    if (m_isGameOver) {
+        return;
+    }
     m_cameraController.Update(deltaSeconds);
     m_snake.Update(deltaSeconds);
     for(auto& wall : m_walls) {
@@ -76,16 +78,6 @@ void Map::Update(TimeUtils::FPSeconds deltaSeconds) noexcept {
     }
     m_food.AddMeshToBuilder(m_builder);
     m_snake.AddMeshToBuilder(m_builder);
-    {
-        AABB2 food_bounds = AABB2::Zero_to_One;
-        food_bounds.SetPosition(m_food.position);
-        AABB2 player_bounds = AABB2::Zero_to_One;
-        player_bounds.SetPosition(m_snake.GetHeadPosition());
-
-        if(MathUtils::DoAABBsOverlap(food_bounds, player_bounds)) {
-            m_canSpawnFood = true;
-        }
-    }
 }
 
 void Map::Render() const noexcept {
@@ -103,13 +95,30 @@ void Map::Render() const noexcept {
 }
 
 void Map::EndFrame() noexcept {
-    /* DO NOTHING */
+    AABB2 food_bounds = AABB2::Zero_to_One;
+    food_bounds.SetPosition(m_food.position);
+    AABB2 player_bounds = AABB2::Zero_to_One;
+    player_bounds.SetPosition(m_snake.GetHeadPosition());
+
+    if (MathUtils::DoAABBsOverlap(food_bounds, player_bounds)) {
+        m_canSpawnFood = true;
+    }
+    for (const auto& wall : m_walls) {
+        const auto wall_bounds = [&wall]() {
+            auto bounds = AABB2::Zero_to_One;
+            bounds.Translate(wall.position);
+            return bounds;
+            }();
+        if (MathUtils::DoAABBsOverlap(wall_bounds, player_bounds)) {
+            m_isGameOver = true;
+        }
+    }
 }
 
 void Map::DebugRender() noexcept {
 
     g_theRenderer->SetMaterial("__2D");
-    g_theRenderer->DrawAABB2(m_bounds, Rgba::Orange, Rgba::NoAlpha);
+    g_theRenderer->DrawAABB2(m_worldBounds, Rgba::Orange, Rgba::NoAlpha);
     g_theRenderer->DrawAABB2(m_validFoodBounds, Rgba::White, Rgba::NoAlpha);
 
     AABB2 food_bounds = AABB2::Zero_to_One;
@@ -140,5 +149,9 @@ void Map::SpawnFoodAtRandom() noexcept {
 }
 
 Vector2 Map::GetDimensions() const noexcept {
-    return m_bounds.CalcDimensions();
+    return m_worldBounds.CalcDimensions();
+}
+
+bool Map::IsGameOver() const noexcept {
+    return m_isGameOver;
 }

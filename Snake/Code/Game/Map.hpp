@@ -35,6 +35,7 @@ public:
 
     Vector2 GetDimensions() const noexcept;
 
+    bool IsGameOver() const noexcept;
 protected:
 private:
 
@@ -46,7 +47,8 @@ private:
     Food m_food{ Vector2::Zero };
     OrthographicCameraController m_cameraController{};
     Snake m_snake{this, Rgba::Green};
-    AABB2 m_bounds{AABB2::Neg_One_to_One};
+    AABB2 m_worldBounds{AABB2::Neg_One_to_One};
     AABB2 m_validFoodBounds{};
     bool m_canSpawnFood{false};
+    bool m_isGameOver{false};
 };
