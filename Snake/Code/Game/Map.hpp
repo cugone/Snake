@@ -45,7 +45,7 @@ private:
     Mesh::Builder m_builder{};
     std::vector<Wall> m_walls{};
     Food m_food{ Vector2::Zero };
-    OrthographicCameraController m_cameraController{};
+    OrthographicCameraController m_cameraController{ OrthographicCameraController::Options{.lockInput = true} };
     Snake m_snake{this, Rgba::Green};
     AABB2 m_worldBounds{AABB2::Neg_One_to_One};
     AABB2 m_validFoodBounds{};
