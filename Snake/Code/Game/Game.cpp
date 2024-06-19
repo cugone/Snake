@@ -104,7 +104,7 @@ void Game::HandlePlayerInput(TimeUtils::FPSeconds deltaSeconds) {
 }
 
 void Game::HandleKeyboardInput(TimeUtils::FPSeconds /*deltaSeconds*/) {
-    if(g_theInputSystem->WasKeyJustPressed(KeyCode::Esc)) {
+    if(map->IsGameOver() || g_theInputSystem->WasKeyJustPressed(KeyCode::Esc)) {
         auto* app = ServiceLocator::get<IAppService>();
         app->SetIsQuitting(true);
         return;
