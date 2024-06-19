@@ -87,7 +87,7 @@ void Snake::AddMeshToBuilder(Mesh::Builder& builder) noexcept {
 
         const auto uvs = AABB2::Zero_to_One;
         builder.SetUV(Vector2{ uvs.mins.x, uvs.maxs.y });
-        builder.AddVertex(Vector3{segment->position + Vector2{ -0.5f, +0.5f }, segment->IsHead() ? GetHeadIndex(m_color) : GetSegmentIndex(m_color)});
+        builder.AddVertex(Vector3{segment->position + Vector2{ -0.5f, +0.5f }, segment->IsHead() ? (blink ? GetHeadIndex(m_color) : GetEyesIndex(m_color)) : GetSegmentIndex(m_color) });
 
         builder.SetUV(Vector2{ uvs.mins.x, uvs.mins.y });
         builder.AddVertex(Vector3{segment->position + Vector2{ -0.5f, -0.5f }, segment->IsHead() ? (blink ? GetHeadIndex(m_color) : GetEyesIndex(m_color)) : GetSegmentIndex(m_color) });
