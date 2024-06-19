@@ -4,8 +4,12 @@
 
 #include "Engine/Core/TimeUtils.hpp"
 #include "Engine/Core/OrthographicCameraController.hpp"
-
+#include "Engine/Renderer/FrameBuffer.hpp"
 #include "Engine/Renderer/Camera2D.hpp"
+
+#include "Game/Map.hpp"
+
+#include <memory>
 
 class Game : public GameBase {
 public:
@@ -14,7 +18,7 @@ public:
     Game(Game&& other) = default;
     Game& operator=(const Game& other) = default;
     Game& operator=(Game&& other) = default;
-    ~Game() = default;
+    virtual ~Game();
 
     void Initialize() noexcept override;
     void BeginFrame() noexcept override;
@@ -26,6 +30,7 @@ public:
     GameSettings& GetSettings() noexcept override;
 protected:
 private:
+    void ShowStatsWindow() const noexcept;
 
     void HandleDebugInput(TimeUtils::FPSeconds deltaSeconds);
     void HandleDebugKeyboardInput(TimeUtils::FPSeconds deltaSeconds);
@@ -37,7 +42,9 @@ private:
     void HandleMouseInput(TimeUtils::FPSeconds deltaSeconds);
 
     mutable Camera2D _ui_camera2D{};
-    OrthographicCameraController _cameraController{};
-    bool _debug_render = false;
+    mutable std::shared_ptr<FrameBuffer> m_frameBuffer{};
+    std::unique_ptr<Map> map{};
+    bool _debug_render{false};
+
 };
 

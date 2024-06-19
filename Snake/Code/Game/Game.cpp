@@ -2,6 +2,8 @@
 
 #include "Engine/Core/EngineCommon.hpp"
 #include "Engine/Core/KerningFont.hpp"
+#include "Engine/Core/Rgba.hpp"
+
 
 #include "Engine/Input/InputSystem.hpp"
 
@@ -9,6 +11,11 @@
 
 #include "Engine/Renderer/Renderer.hpp"
 #include "Engine/Renderer/Material.hpp"
+
+#include "Engine/Renderer/Mesh.hpp"
+
+#include "Engine/Renderer/FrameBuffer.hpp"
+#include "Engine/Platform/DirectX/DirectX11FrameBuffer.hpp"
 
 #include "Engine/Services/ServiceLocator.hpp"
 #include "Engine/Services/IAppService.hpp"
@@ -18,68 +25,68 @@
 #include "Game/GameCommon.hpp"
 #include "Game/GameConfig.hpp"
 
+#include "Game/Wall.hpp"
+
+Game::~Game() {
+    map.reset();
+    m_frameBuffer.reset();
+}
+
 void Game::Initialize() noexcept {
+    {
+        FrameBufferDesc desc{};
+        desc.width = 1600;
+        desc.height = 900;
+        desc.SwapChainTarget = true;
+        m_frameBuffer = FrameBuffer::Create(desc);
+    }
+    {
+        auto texture = g_theRenderer->Create2DTextureArrayFromFolder(std::filesystem::path{ "Data/Images/Assets/" });
+        GUARANTEE_OR_DIE(texture && g_theRenderer->RegisterTexture("assets", std::move(texture)), "Failed to register texture array of assets.");
+        g_theRenderer->RegisterTexturesFromFolder(std::filesystem::path{ "Data/Images/Assets/" });
+    }
+
     g_theRenderer->RegisterMaterialsFromFolder(FileUtils::GetKnownFolderPath(FileUtils::KnownPathID::GameMaterials));
     g_theRenderer->RegisterFontsFromFolder(FileUtils::GetKnownFolderPath(FileUtils::KnownPathID::GameFonts));
 
-    _cameraController = OrthographicCameraController();
-    _cameraController.SetPosition(Vector2::Zero);
+    map = std::make_unique<Map>();
 }
 
 void Game::BeginFrame() noexcept {
-    /* DO NOTHING */
+    map->BeginFrame();
 }
 
 void Game::Update(TimeUtils::FPSeconds deltaSeconds) noexcept {
     g_theRenderer->UpdateGameTime(deltaSeconds);
 
+    HandleDebugInput(deltaSeconds);
     HandlePlayerInput(deltaSeconds);
 
     _ui_camera2D.Update(deltaSeconds);
-    _cameraController.Update(deltaSeconds);
+
+    map->Update(deltaSeconds);
+
 }
 
 void Game::Render() const noexcept {
-    g_theRenderer->BeginRenderToBackbuffer();
 
+    m_frameBuffer->Bind(Rgba::ForestGreen);
 
     //World View
-    g_theRenderer->SetMaterial(g_theRenderer->GetMaterial("__2D"));
     {
-        const auto S = Matrix4::CreateScaleMatrix(Vector2::One);
-        const auto R = Matrix4::I;
-        const auto T = Matrix4::I;
-        const auto M = Matrix4::MakeSRT(S, R, T);
-        g_theRenderer->DrawQuad2D(M, Rgba::ForestGreen);
+        map->Render();
+        if (_debug_render) {
+            map->DebugRender();
+        }
     }
 
     // HUD View
-    {
-        const auto ui_view_height = static_cast<float>(GetSettings().GetWindowHeight());
-        const auto ui_view_width = ui_view_height * _ui_camera2D.GetAspectRatio();
-        const auto ui_view_extents = Vector2{ui_view_width, ui_view_height};
-        const auto ui_view_half_extents = ui_view_extents * 0.5f;
-        const auto ui_cam_pos = Vector2::Zero;
-        g_theRenderer->BeginHUDRender(_ui_camera2D, ui_cam_pos, ui_view_height);
 
-        {
-            const auto S = Matrix4::CreateScaleMatrix(Vector2::One * (1.0f + MathUtils::SineWaveDegrees(g_theRenderer->GetGameTime().count())));
-            static float r = 0.0f;
-            const std::string text = "Abrams 2022 Template";
-            const auto* font = g_theRenderer->GetFont("System32");
-            const auto T = Matrix4::I;
-            const auto nT = Matrix4::CreateTranslationMatrix(-Vector2{font->CalculateTextWidth(text), font->CalculateTextHeight(text)} * 0.5f);
-            const auto R = Matrix4::Create2DRotationDegreesMatrix(r);
-            static const float w = 90.0f;
-            r += g_theRenderer->GetGameFrameTime().count() * w;
-            const auto M = Matrix4::MakeRT(nT, Matrix4::MakeSRT(S, R, T));
-            g_theRenderer->DrawTextLine(M, font, text);
-        }
-    }
 }
 
 void Game::EndFrame() noexcept {
-    /* DO NOTHING */
+    map->EndFrame();
+    m_frameBuffer->Unbind();
 }
 
 const GameSettings& Game::GetSettings() const noexcept {
@@ -97,10 +104,13 @@ void Game::HandlePlayerInput(TimeUtils::FPSeconds deltaSeconds) {
 }
 
 void Game::HandleKeyboardInput(TimeUtils::FPSeconds /*deltaSeconds*/) {
-    if(g_theInputSystem->WasKeyJustPressed(KeyCode::Esc)) {
+    if(map->IsGameOver() || g_theInputSystem->WasKeyJustPressed(KeyCode::Esc)) {
         auto* app = ServiceLocator::get<IAppService>();
         app->SetIsQuitting(true);
         return;
+    }
+    if(g_theInputSystem->WasKeyJustPressed(KeyCode::F1)) {
+        _debug_render = !_debug_render;
     }
 }
 
@@ -112,6 +122,10 @@ void Game::HandleMouseInput(TimeUtils::FPSeconds /*deltaSeconds*/) {
 
 }
 
+void Game::ShowStatsWindow() const noexcept {
+    g_theUISystem->ToggleImguiMetricsWindow();
+}
+
 void Game::HandleDebugInput(TimeUtils::FPSeconds deltaSeconds) {
     HandleDebugKeyboardInput(deltaSeconds);
     HandleDebugMouseInput(deltaSeconds);
@@ -120,6 +134,9 @@ void Game::HandleDebugInput(TimeUtils::FPSeconds deltaSeconds) {
 void Game::HandleDebugKeyboardInput(TimeUtils::FPSeconds /*deltaSeconds*/) {
     if(g_theUISystem->WantsInputKeyboardCapture()) {
         return;
+    }
+    if(g_theInputSystem->WasKeyJustPressed(KeyCode::F2)) {
+        ShowStatsWindow();
     }
     if(g_theInputSystem->WasKeyJustPressed(KeyCode::F4)) {
         g_theUISystem->ToggleImguiDemoWindow();

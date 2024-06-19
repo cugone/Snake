@@ -1,0 +1,6 @@
+<material name="tile">
+    <shader src="Data/Shaders/tile.shader" />
+    <textures>
+        <diffuse src="assets" />
+    </textures>
+</material>

@@ -40,6 +40,24 @@
     <ClCompile Include="GameConfig.cpp">
       <Filter>General</Filter>
     </ClCompile>
+    <ClCompile Include="Wall.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Map.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Food.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Snake.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="SnakeSegment.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameCommon.hpp">
@@ -51,5 +69,101 @@
     <ClInclude Include="GameConfig.hpp">
       <Filter>General</Filter>
     </ClInclude>
+    <ClInclude Include="Wall.hpp">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Map.hpp">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Food.hpp">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Snake.hpp">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="SnakeSegment.hpp">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.hpp">
+      <Filter>Game</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\Run_x64\Data\Materials\tile.material">
+      <Filter>Data\Materials</Filter>
+    </None>
+    <None Include="..\..\Run_x64\Data\Shaders\tile.shader">
+      <Filter>Data\Shaders</Filter>
+    </None>
+    <None Include="..\..\Run_x64\Data\ShaderPrograms\tile_PS.cso">
+      <Filter>Data\ShaderPrograms</Filter>
+    </None>
+    <None Include="..\..\Run_x64\Data\ShaderPrograms\tile_VS.cso">
+      <Filter>Data\ShaderPrograms</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\Run_x64\Data\Images\Assets\apple_alt_64.png">
+      <Filter>Data\Images</Filter>
+    </Image>
+    <Image Include="..\..\Run_x64\Data\Images\Assets\apple_green_64.png">
+      <Filter>Data\Images</Filter>
+    </Image>
+    <Image Include="..\..\Run_x64\Data\Images\Assets\apple_red_64.png">
+      <Filter>Data\Images</Filter>
+    </Image>
+    <Image Include="..\..\Run_x64\Data\Images\Assets\bomb_64.png">
+      <Filter>Data\Images</Filter>
+    </Image>
+    <Image Include="..\..\Run_x64\Data\Images\Assets\easter_egg_64.png">
+      <Filter>Data\Images</Filter>
+    </Image>
+    <Image Include="..\..\Run_x64\Data\Images\Assets\oliebol_64.png">
+      <Filter>Data\Images</Filter>
+    </Image>
+    <Image Include="..\..\Run_x64\Data\Images\Assets\snake_green_blob_64.png">
+      <Filter>Data\Images</Filter>
+    </Image>
+    <Image Include="..\..\Run_x64\Data\Images\Assets\snake_green_eyes_64.png">
+      <Filter>Data\Images</Filter>
+    </Image>
+    <Image Include="..\..\Run_x64\Data\Images\Assets\snake_green_head_64.png">
+      <Filter>Data\Images</Filter>
+    </Image>
+    <Image Include="..\..\Run_x64\Data\Images\Assets\snake_yellow_blob_64.png">
+      <Filter>Data\Images</Filter>
+    </Image>
+    <Image Include="..\..\Run_x64\Data\Images\Assets\snake_yellow_eyes_64.png">
+      <Filter>Data\Images</Filter>
+    </Image>
+    <Image Include="..\..\Run_x64\Data\Images\Assets\snake_yellow_head_64.png">
+      <Filter>Data\Images</Filter>
+    </Image>
+    <Image Include="..\..\Run_x64\Data\Images\Assets\wall_block_64_0.png">
+      <Filter>Data\Images</Filter>
+    </Image>
+    <Image Include="..\..\Run_x64\Data\Images\Assets\wall_block_64_1.png">
+      <Filter>Data\Images</Filter>
+    </Image>
+    <Image Include="..\..\Run_x64\Data\Images\Assets\wall_block_64_2.png">
+      <Filter>Data\Images</Filter>
+    </Image>
+    <Image Include="..\..\Run_x64\Data\Images\Assets\wall_block_64_3.png">
+      <Filter>Data\Images</Filter>
+    </Image>
+    <Image Include="..\..\Run_x64\Data\Images\Assets\wall_block_64_4.png">
+      <Filter>Data\Images</Filter>
+    </Image>
+    <Image Include="..\..\Run_x64\Data\Images\Assets\wall_block_64_5.png">
+      <Filter>Data\Images</Filter>
+    </Image>
+    <Image Include="..\..\Run_x64\Data\Images\Assets\wall_block_64_6.png">
+      <Filter>Data\Images</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="..\..\Run_x64\Data\ShaderPrograms\tile.hlsl">
+      <Filter>Data\ShaderPrograms</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>
