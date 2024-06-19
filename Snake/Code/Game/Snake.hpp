@@ -39,13 +39,18 @@ public:
     void MoveUp() noexcept;
     void MoveDown() noexcept;
 
+    bool Blink() noexcept;
 protected:
 private:
+
     Vector2 m_velocity{};
     float m_speed{10.0f};
     std::vector<SnakeSegment> m_segments{};
-    Stopwatch m_blinkrate{};
+    Stopwatch m_blinkRate{};
+    Stopwatch m_blinkDelay{};
     Map* m_map{nullptr};
     Rgba m_color{Rgba::Green};
+    bool m_canBlink{false};
+    bool m_startBlinking{false};
     
 };

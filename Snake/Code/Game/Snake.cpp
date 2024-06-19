@@ -43,27 +43,27 @@ Snake::Snake(Map* parent_map, const Rgba& color) noexcept
     , m_color(color)
     , m_velocity{Vector2::X_Axis * m_speed}
 {
-    m_blinkrate.SetFrequency(3);
+    m_blinkRate.SetFrequency(3);
+    m_blinkDelay.SetSeconds(TimeUtils::FPSeconds{2.5f});
     AddSegment();
 }
 
 void Snake::Update(TimeUtils::FPSeconds deltaSeconds) noexcept {
+    m_canBlink = m_blinkDelay.CheckAndReset();
+    m_startBlinking = m_blinkRate.Check();
 
     if(g_theInputSystem->WasKeyJustPressed(KeyCode::D)) {
         MoveRight();
-    }
-    else if (g_theInputSystem->WasKeyJustPressed(KeyCode::A)) {
+    } else if (g_theInputSystem->WasKeyJustPressed(KeyCode::A)) {
         MoveLeft();
-    }
-    else if (g_theInputSystem->WasKeyJustPressed(KeyCode::W)) {
+    } else if (g_theInputSystem->WasKeyJustPressed(KeyCode::W)) {
         MoveUp();
-    }
-    else if (g_theInputSystem->WasKeyJustPressed(KeyCode::S)) {
+    } else if (g_theInputSystem->WasKeyJustPressed(KeyCode::S)) {
         MoveDown();
     }
 
     for(auto current_segment = std::rbegin(m_segments); current_segment != std::rend(m_segments); /* DO NOTHING */) {
-        const auto next_segment = std::next(current_segment);
+        const auto next_segment = current_segment + 1;
         if (next_segment == std::rend(m_segments)) {
             break;
         }
@@ -74,23 +74,29 @@ void Snake::Update(TimeUtils::FPSeconds deltaSeconds) noexcept {
 
 }
 
+bool Snake::Blink() noexcept {
+    m_startBlinking = m_blinkRate.CheckAndReset();
+    return m_startBlinking && m_canBlink;
+}
+
 void Snake::AddMeshToBuilder(Mesh::Builder& builder) noexcept {
     builder.Begin(PrimitiveType::Triangles);
     builder.SetColor(Rgba::White);
-    for(auto segment = std::cbegin(m_segments); segment != std::cend(m_segments); ++segment) {
+    const auto blink = Blink();
+    for(auto segment = std::crbegin(m_segments); segment != std::crend(m_segments); ++segment) {
 
         const auto uvs = AABB2::Zero_to_One;
         builder.SetUV(Vector2{ uvs.mins.x, uvs.maxs.y });
         builder.AddVertex(Vector3{segment->position + Vector2{ -0.5f, +0.5f }, segment->IsHead() ? GetHeadIndex(m_color) : GetSegmentIndex(m_color)});
 
         builder.SetUV(Vector2{ uvs.mins.x, uvs.mins.y });
-        builder.AddVertex(Vector3{segment->position + Vector2{ -0.5f, -0.5f }, segment->IsHead() ? GetHeadIndex(m_color) : GetSegmentIndex(m_color) });
+        builder.AddVertex(Vector3{segment->position + Vector2{ -0.5f, -0.5f }, segment->IsHead() ? (blink ? GetHeadIndex(m_color) : GetEyesIndex(m_color)) : GetSegmentIndex(m_color) });
 
         builder.SetUV(Vector2{ uvs.maxs.x, uvs.mins.y });
-        builder.AddVertex(Vector3{segment->position + Vector2{ +0.5f, -0.5f }, segment->IsHead() ? GetHeadIndex(m_color) : GetSegmentIndex(m_color) });
+        builder.AddVertex(Vector3{segment->position + Vector2{ +0.5f, -0.5f }, segment->IsHead() ? (blink ? GetHeadIndex(m_color) : GetEyesIndex(m_color)) : GetSegmentIndex(m_color) });
 
         builder.SetUV(Vector2{ uvs.maxs.x, uvs.maxs.y });
-        builder.AddVertex(Vector3{segment->position + Vector2{ +0.5f, +0.5f }, segment->IsHead() ? GetHeadIndex(m_color) : GetSegmentIndex(m_color) });
+        builder.AddVertex(Vector3{segment->position + Vector2{ +0.5f, +0.5f }, segment->IsHead() ? (blink ? GetHeadIndex(m_color) : GetEyesIndex(m_color)) : GetSegmentIndex(m_color) });
 
         builder.AddIndicies(Mesh::Builder::Primitive::Quad);
     }
@@ -100,9 +106,7 @@ void Snake::AddMeshToBuilder(Mesh::Builder& builder) noexcept {
 }
 
 void Snake::EndFrame() noexcept {
-    if(m_blinkrate.Check()) {
-        m_blinkrate.Reset();
-    }
+    /* DO NOTHING */
 }
 
 void Snake::AddSegment() noexcept {
